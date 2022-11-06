@@ -71,11 +71,12 @@ loop do
       prompt(MESSAGES['invalid_number'])
     end
   end
-  # Monthly Variable
+  # Monthly Variables
   loan_duration_months = loan_duration_years.to_i * 12
   monthly_interest = (apr.to_f / 100) / 12
   monthly_payment = loan_amount.to_f * (monthly_interest.to_f / (1 -
                      (1 + monthly_interest.to_f)**(-loan_duration_months.to_i)))
+  # Interest Variables
   interest = total_interest(loan_amount, monthly_interest, monthly_payment)
   total = interest + loan_amount.to_f
 
