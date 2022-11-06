@@ -29,16 +29,19 @@ def total_interest(total_loan, monthly_interest, monthly_payment)
   end
   total_ammortization_interest.round(2)
 end
+
 # Welcome message
 
 prompt(MESSAGES['name'])
 name = Kernel.gets().chomp()
 
 prompt("Welcome to the Loan Calculator #{name}!")
+
 # START MAIN LOOP HERE
 
 loop do
   # Total loan amount request
+
   loan_amount = ''
   loop do
     prompt(MESSAGES['loan_amount'])
@@ -49,7 +52,9 @@ loop do
       prompt(MESSAGES['invalid_number'])
     end
   end
+
   # APR request
+
   apr = ''
   loop do
     prompt(MESSAGES['enter_apr'])
@@ -60,7 +65,9 @@ loop do
       prompt(MESSAGES['invalid_number'])
     end
   end
+
   # Loan Duration in years
+
   loan_duration_years = ''
   loop do
     prompt(MESSAGES['enter_loan_duration'])
@@ -71,12 +78,15 @@ loop do
       prompt(MESSAGES['invalid_number'])
     end
   end
+
   # Monthly Variables
+
   loan_duration_months = loan_duration_years.to_i * 12
   monthly_interest = (apr.to_f / 100) / 12
   monthly_payment = loan_amount.to_f * (monthly_interest.to_f / (1 -
                      (1 + monthly_interest.to_f)**(-loan_duration_months.to_i)))
   # Interest Variables
+
   interest = total_interest(loan_amount, monthly_interest, monthly_payment)
   total = interest + loan_amount.to_f
 
@@ -90,7 +100,9 @@ Here are your loan calculation results:
   MSG
 
   prompt(operator_prompt)
+
   # Request if another loan calculation is needed.
+
   prompt(MESSAGES['go_again'])
   answer = Kernel.gets().chomp().downcase()
   break if answer != 'y'
