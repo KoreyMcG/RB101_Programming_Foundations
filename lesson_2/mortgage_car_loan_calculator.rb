@@ -27,7 +27,6 @@ def total_interest(total_loan, monthly_interest, monthly_payment)
     outstanding_loan -= principle_payment.to_f
     total_ammortization_interest += interest.to_f
   end
-
   total_ammortization_interest.round(2)
 end
 # Welcome message
@@ -40,49 +39,39 @@ prompt("Welcome to the Loan Calculator #{name}!")
 
 loop do
   # Total loan amount request
-
   loan_amount = ''
   loop do
     prompt(MESSAGES['loan_amount'])
     loan_amount = gets.chomp
- 
     if valid_number?(loan_amount)
       break
     else
       prompt(MESSAGES['invalid_number'])
     end
   end
- 
   # APR request
- 
   apr = ''
   loop do
     prompt(MESSAGES['enter_apr'])
     apr = gets.chomp
- 
     if valid_number?(apr)
       break
     else
       prompt(MESSAGES['invalid_number'])
     end
   end
- 
   # Loan Duration in years
- 
   loan_duration_years = ''
   loop do
     prompt(MESSAGES['enter_loan_duration'])
     loan_duration_years = gets.chomp
-
     if valid_number?(loan_duration_years)
       break
     else
       prompt(MESSAGES['invalid_number'])
     end
   end
- 
   # Monthly Variable
- 
   loan_duration_months = loan_duration_years.to_i * 12
   monthly_interest = (apr.to_f / 100) / 12
   monthly_payment = loan_amount.to_f * (monthly_interest.to_f / (1 -
@@ -100,7 +89,6 @@ Here are your loan calculation results:
   MSG
 
   prompt(operator_prompt)
- 
   # Request if another loan calculation is needed.
   prompt(MESSAGES['go_again'])
   answer = gets.chomp.downcase
