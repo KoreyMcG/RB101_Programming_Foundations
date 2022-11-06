@@ -2,7 +2,7 @@ require 'yaml'
 MESSAGES = YAML.load_file('loan_messages.yml')
 
 def prompt(msg)
-  puts "=> #{msg}"
+  Kernel.puts("=> #{msg}")
 end
 
 def integer?(num)
@@ -32,7 +32,7 @@ end
 # Welcome message
 
 prompt(MESSAGES['name'])
-name = gets.chomp
+name = Kernel.gets().chomp()
 
 prompt("Welcome to the Loan Calculator #{name}!")
 # START MAIN LOOP HERE
@@ -42,7 +42,7 @@ loop do
   loan_amount = ''
   loop do
     prompt(MESSAGES['loan_amount'])
-    loan_amount = gets.chomp
+    loan_amount = Kernel.gets().chomp()
     if valid_number?(loan_amount)
       break
     else
@@ -53,7 +53,7 @@ loop do
   apr = ''
   loop do
     prompt(MESSAGES['enter_apr'])
-    apr = gets.chomp
+    apr = Kernel.gets().chomp()
     if valid_number?(apr)
       break
     else
@@ -91,7 +91,7 @@ Here are your loan calculation results:
   prompt(operator_prompt)
   # Request if another loan calculation is needed.
   prompt(MESSAGES['go_again'])
-  answer = gets.chomp.downcase
+  answer = Kernel.gets().chomp().downcase()
   break if answer != 'y'
 end
 
