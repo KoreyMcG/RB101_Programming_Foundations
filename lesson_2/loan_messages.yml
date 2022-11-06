@@ -1,0 +1,7 @@
+enter_apr: "Please enter your Annual Percentage Rate (Ex. 6 = .06 percent)"
+enter_loan_duration: "Please enter your Loan Duration in years"
+loan_amount: "Please enter the Total Loan Amount"
+invalid_number: "Invalid number please try again.."
+name: "Please enter your name to begin."
+go_again: "Would you like to calculate a new loan? (Y/N)"
+thanks: "Thank you for using the Loan Calculator APP. Have a nice day!"
