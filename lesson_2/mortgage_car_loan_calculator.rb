@@ -19,15 +19,15 @@ end
 
 def total_interest(total_loan, monthly_interest, monthly_payment)
   outstanding_loan = total_loan.to_f
-  total_ammortization_interest = 0
+  total_amortization_interest = 0
   while outstanding_loan > 0
     principle_payment = monthly_payment.to_f - (outstanding_loan.to_f *
                                                 monthly_interest.to_f)
     interest = monthly_payment.to_f - principle_payment.to_f
     outstanding_loan -= principle_payment.to_f
-    total_ammortization_interest += interest.to_f
+    total_amortization_interest += interest.to_f
   end
-  total_ammortization_interest.round(2)
+  total_amortization_interest.round(2)
 end
 
 # Welcome message
