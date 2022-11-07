@@ -4,23 +4,20 @@ def prompt(message)
   Kernel.puts("=> #{message}")
 end
 
-def win?(first, second)
-  (first == 'rock' && second == 'scissors') ||
-    (first == 'rock' && second == 'lizard') ||
-    (first == 'scissors' && second == 'lizard') ||
-    (first == 'scissors' && second == 'paper') ||
-    (first == 'spock' && second == 'scissors') ||
-    (first == 'spock' && second == 'rock') ||
-    (first == 'lizard' && second == 'spock') ||
-    (first == 'lizard' && second == 'paper') ||
-    (first == 'paper' && second == 'rock') ||
-    (first == 'paper' && second == 'spock')
+def win?
+  win_conditions = {
+    'rock' => ['scissors', 'lizard'],
+    'scissors' => ['lizard', 'paper'],
+    'spock' => ['scissors', 'rock'],
+    'lizard' => ['spock', 'paper'],
+    'paper' => ['rock', 'spock']
+  }
 end
 
 def display_result(player, computer)
-  if win?(player, computer)
+  if win?[player].include?(computer)
     prompt("You won!")
-  elsif win?(computer, player)
+  elsif win?[computer].include?(player)
     prompt("Computer won!")
   else
     prompt("It's a tie!")
