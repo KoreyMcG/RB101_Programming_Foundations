@@ -14,6 +14,17 @@ def win?
   }
 end
 
+def short_choice(answer)
+  case answer
+  when 'sp' then 'spock'
+  when 'l' then 'lizard'
+  when 'p' then 'p'
+  when 'r' then 'rock'
+  when 'sc' then 'scissors'
+  else answer
+  end
+end
+
 def display_result(player, computer)
   if win?[player].include?(computer)
     prompt("You won!")
@@ -28,10 +39,12 @@ loop do
   choice = ''
   loop do
     prompt("Choose one: #{VALID_CHOICES.join(', ')}")
-    choice = Kernel.gets().chomp()
+    choice = short_choice(Kernel.gets().chomp())
 
     if VALID_CHOICES.include?(choice)
       break
+    elsif choice == 's'
+      prompt("Please enter 'sc' for scissors or 'sp' for spock.")
     else
       prompt("That's not a valid choice.")
     end
