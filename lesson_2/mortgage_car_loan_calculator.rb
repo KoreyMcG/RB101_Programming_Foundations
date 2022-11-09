@@ -89,7 +89,7 @@ name = name_valid?
 
 prompt("Welcome to the Loan Calculator #{name}!")
 
-loop do  # Main Loop Start
+loop do # Main Loop Start
   loan_amount = get_loan_amount.to_f
   apr = get_apr.to_f
 
