@@ -18,30 +18,18 @@ def valid_number?(num)
 end
 
 def total_interest(total_loan, monthly_interest, monthly_payment)
-  outstanding_loan = total_loan.to_f
+  outstanding_loan = total_loan
   total_amortization_interest = 0
   while outstanding_loan > 0
-    principle_payment = monthly_payment.to_f - (outstanding_loan.to_f *
-                                                monthly_interest.to_f)
-    interest = monthly_payment.to_f - principle_payment.to_f
-    outstanding_loan -= principle_payment.to_f
-    total_amortization_interest += interest.to_f
+    principle_payment = monthly_payment - (outstanding_loan * monthly_interest)
+    interest = monthly_payment - principle_payment
+    outstanding_loan -= principle_payment
+    total_amortization_interest += interest
   end
   total_amortization_interest.round(2)
 end
 
-# Welcome message
-
-prompt(MESSAGES['name'])
-name = Kernel.gets().chomp()
-
-prompt("Welcome to the Loan Calculator #{name}!")
-
-# START MAIN LOOP HERE
-
-loop do
-  # Total loan amount request
-
+def get_loan_amount
   loan_amount = ''
   loop do
     prompt(MESSAGES['loan_amount'])
@@ -52,9 +40,10 @@ loop do
       prompt(MESSAGES['invalid_number'])
     end
   end
+  loan_amount
+end
 
-  # APR request
-
+def get_apr
   apr = ''
   loop do
     prompt(MESSAGES['enter_apr'])
@@ -65,9 +54,10 @@ loop do
       prompt(MESSAGES['invalid_number'])
     end
   end
+  apr
+end
 
-  # Loan Duration in years
-
+def get_loan_duration
   loan_duration_years = ''
   loop do
     prompt(MESSAGES['enter_loan_duration'])
@@ -78,25 +68,50 @@ loop do
       prompt(MESSAGES['invalid_number'])
     end
   end
+  loan_duration_years
+end
+
+def name_valid?
+  loop do
+    name = Kernel.gets().strip().chomp()
+    if name.empty?
+      prompt(MESSAGES['invalid_name'])
+    else
+      break name
+    end
+  end
+end
+
+# Welcome message
+
+prompt(MESSAGES['name'])
+name = name_valid?
+
+prompt("Welcome to the Loan Calculator #{name}!")
+
+loop do  # Main Loop Start
+  loan_amount = get_loan_amount.to_f
+  apr = get_apr.to_f
 
   # Monthly Variables
 
-  loan_duration_months = loan_duration_years.to_i * 12
-  monthly_interest = (apr.to_f / 100) / 12
-  monthly_payment = loan_amount.to_f * (monthly_interest.to_f / (1 -
-                     (1 + monthly_interest.to_f)**(-loan_duration_months.to_i)))
+  loan_duration_months = get_loan_duration.to_f * 12
+  monthly_interest = (apr / 100) / 12
+  monthly_payment = loan_amount * (monthly_interest / (1 -
+                     (1 + monthly_interest)**(-loan_duration_months)))
+
   # Interest Variables
 
   interest = total_interest(loan_amount, monthly_interest, monthly_payment)
-  total = interest + loan_amount.to_f
+  total = interest + loan_amount
 
   # Output to User
 
   operator_prompt = <<-MSG
 Here are your loan calculation results:
-    Monthly Payments:    $ #{monthly_payment.round(2)}
-    Total Interest Paid: $ #{interest}
-    Total Amount Paid:   $ #{total.round(2)}
+    Monthly Payments:     $ #{monthly_payment.round(2)}
+    Total Interest Paid:  $ #{interest}
+    Total Amount Paid:    $ #{total.round(2)}
   MSG
 
   prompt(operator_prompt)
@@ -105,7 +120,7 @@ Here are your loan calculation results:
 
   prompt(MESSAGES['go_again'])
   answer = Kernel.gets().chomp().downcase()
-  break if answer != 'y'
+  break unless answer.start_with?('y')
 end
 
 prompt(MESSAGES['thanks'])
