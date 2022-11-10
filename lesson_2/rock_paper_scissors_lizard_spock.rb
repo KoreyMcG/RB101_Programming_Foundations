@@ -25,14 +25,6 @@ def short_choice(answer)
   end
 end
 
-def counter(choice, computer_choice)
-  if win?[choice].include?(computer_choice)
-    'player'
-  elsif win?[computer_choice].include?(choice)
-    'computer'
-  end
-end
-
 def display_result(player, computer)
   if win?[player].include?(computer)
     prompt("You won!")
@@ -59,17 +51,47 @@ def get_answer(choice)
   choice
 end
 
+def end_game(player_wins, computer_wins)
+  if player_wins == 3
+    prompt("Player crowned Grand Champion.")
+  elsif computer_wins == 3
+    prompt("Computer's tired of winning.")
+  end
+end
+
 player_wins = 0
 computer_wins = 0
 ties = 0
 
 loop do
+  system("clear")
   choice = get_answer(choice)
   computer_choice = VALID_CHOICES.sample
 
-  Kernel.puts("You chose: #{choice}; Computer chose: #{computer_choice}")
+  Kernel.puts("You chose: #{choice}; Computer chose: #{computer_choice}\n")
 
   display_result(choice, computer_choice)
+
+  if win?[choice].include?(computer_choice)
+    player_wins += 1
+  elsif win?[computer_choice].include?(choice)
+    computer_wins += 1
+  else
+    ties += 1
+  end
+
+  score_board = <<-MSG
+----------------SCORE BOARD--------------------
+-----------------------------------------------
+  •  Player's Score:    #{player_wins}
+  •  Computer's Score:  #{computer_wins}
+  •  Number of Draws:   #{ties}
+-----------------------------------------------
+  MSG
+  puts score_board
+
+  end_game(player_wins, computer_wins)
+  break if player_wins == 3 || computer_wins == 3
 
   prompt("Do you want to play again?")
   answer = Kernel.gets().chomp()
