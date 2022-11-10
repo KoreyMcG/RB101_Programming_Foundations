@@ -18,10 +18,18 @@ def short_choice(answer)
   case answer
   when 'sp' then 'spock'
   when 'l' then 'lizard'
-  when 'p' then 'p'
+  when 'p' then 'paper'
   when 'r' then 'rock'
   when 'sc' then 'scissors'
   else answer
+  end
+end
+
+def counter(choice, computer_choice)
+  if win?[choice].include?(computer_choice)
+    'player'
+  elsif win?[computer_choice].include?(choice)
+    'computer'
   end
 end
 
@@ -35,11 +43,10 @@ def display_result(player, computer)
   end
 end
 
-loop do
-  choice = ''
+def get_answer(choice)
   loop do
     prompt("Choose one: #{VALID_CHOICES.join(', ')}")
-    choice = short_choice(Kernel.gets().chomp())
+    choice = short_choice(Kernel.gets().downcase.chomp())
 
     if VALID_CHOICES.include?(choice)
       break
@@ -49,7 +56,15 @@ loop do
       prompt("That's not a valid choice.")
     end
   end
+  choice
+end
 
+player_wins = 0
+computer_wins = 0
+ties = 0
+
+loop do
+  choice = get_answer(choice)
   computer_choice = VALID_CHOICES.sample
 
   Kernel.puts("You chose: #{choice}; Computer chose: #{computer_choice}")
