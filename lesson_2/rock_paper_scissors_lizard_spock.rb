@@ -68,7 +68,7 @@ loop do
   choice = get_answer(choice)
   computer_choice = VALID_CHOICES.sample
 
-  Kernel.puts("You chose: #{choice}; Computer chose: #{computer_choice}\n")
+  Kernel.puts("You chose: #{choice}; Computer chose: #{computer_choice}")
 
   display_result(choice, computer_choice)
 
