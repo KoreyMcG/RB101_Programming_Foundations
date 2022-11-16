@@ -1,4 +1,3 @@
-VALID_CHOICES = %w(rock paper scissors lizard spock)
 WIN_CONDITIONS = {
   'rock' => { abbreviation: 'r', beats: ['scissors', 'lizard'] },
   'scissors' => { abbreviation: 'sc', beats: ['lizard', 'paper'] },
@@ -22,7 +21,7 @@ def display_result(player, computer)
 end
 
 def convert_short_answer(choice)
-  if VALID_CHOICES.include?(choice)
+  if WIN_CONDITIONS.keys.include?(choice)
     choice
   elsif choice == 's'
     choice
@@ -36,10 +35,10 @@ end
 
 def get_answer(choice)
   loop do
-    prompt("Choose one: #{VALID_CHOICES.join(', ')}")
+    prompt("Choose one: #{WIN_CONDITIONS.keys.join(', ')}")
     choice = convert_short_answer(Kernel.gets().downcase.chomp())
 
-    if VALID_CHOICES.include?(choice)
+    if WIN_CONDITIONS.keys.include?(choice)
       break
     elsif choice == 's'
       prompt("Please enter 'sc' for scissors or 'sp' for spock.")
@@ -95,7 +94,7 @@ end
 loop do
   system("clear")
   choice = get_answer(choice)
-  computer_choice = VALID_CHOICES.sample
+  computer_choice = WIN_CONDITIONS.keys.sample
 
   Kernel.puts("You chose: #{choice}; Computer chose: #{computer_choice}")
 
