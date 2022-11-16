@@ -1,44 +1,43 @@
 VALID_CHOICES = %w(rock paper scissors lizard spock)
+WIN_CONDITIONS = {
+  'rock' => { abbreviation: 'r', beats: ['scissors', 'lizard'] },
+  'scissors' => { abbreviation: 'sc', beats: ['lizard', 'paper'] },
+  'spock' => { abbreviation: 'sp', beats: ['scissors', 'rock'] },
+  'lizard' => { abbreviation: 'l', beats: ['spock', 'paper'] },
+  'paper' => { abbreviation: 'p', beats: ['rock', 'spock'] }
+}
 
 def prompt(message)
   Kernel.puts("=> #{message}")
 end
 
-def win?
-  win_conditions = {
-    'rock' => ['scissors', 'lizard'],
-    'scissors' => ['lizard', 'paper'],
-    'spock' => ['scissors', 'rock'],
-    'lizard' => ['spock', 'paper'],
-    'paper' => ['rock', 'spock']
-  }
-end
-
-def short_choice(answer)
-  case answer
-  when 'sp' then 'spock'
-  when 'l' then 'lizard'
-  when 'p' then 'paper'
-  when 'r' then 'rock'
-  when 'sc' then 'scissors'
-  else answer
-  end
-end
-
 def display_result(player, computer)
-  if win?[player].include?(computer)
+  if WIN_CONDITIONS.dig(player, :beats).include?(computer)
     prompt("You won!")
-  elsif win?[computer].include?(player)
+  elsif WIN_CONDITIONS.dig(computer, :beats).include?(player)
     prompt("Computer won!")
   else
     prompt("It's a tie!")
   end
 end
 
+def convert_short_answer(choice)
+  if VALID_CHOICES.include?(choice)
+    choice
+  elsif choice == 's'
+    choice
+  else
+    answer = (WIN_CONDITIONS.select do |_, value|
+                value[:abbreviation] == choice
+              end).keys.first
+    answer
+  end
+end
+
 def get_answer(choice)
   loop do
     prompt("Choose one: #{VALID_CHOICES.join(', ')}")
-    choice = short_choice(Kernel.gets().downcase.chomp())
+    choice = convert_short_answer(Kernel.gets().downcase.chomp())
 
     if VALID_CHOICES.include?(choice)
       break
@@ -59,9 +58,39 @@ def end_game(player_wins, computer_wins)
   end
 end
 
+instructions = <<-INSTRUCTIONS
+---------The rules of the game---------
+---------------------------------------
+The first to 3 wins is crowned champion
+Win conditions are as follows:
+• Scissors cuts Paper
+• Paper covers Rock
+• Rock crushes Lizard
+• Lizard poisons Spock
+• Spock smashes Scissors
+• Scissors decapitates Lizard
+• Lizard eats Paper
+• Paper disproves Spock
+• Spock vaporizes Rock
+• Rock crushes Scissors
+---------------------------------------
+------Enter any key to start game------
+
+INSTRUCTIONS
+
 player_wins = 0
 computer_wins = 0
 ties = 0
+
+system('clear')
+prompt("Welcome to Rock, Paper, Scissors, Lizard, Spock!")
+prompt("Would you like to see the rules of the game?")
+answer = Kernel.gets().downcase().chomp()
+
+if answer.start_with?('y')
+  puts instructions
+  gets.chomp
+end
 
 loop do
   system("clear")
@@ -72,9 +101,9 @@ loop do
 
   display_result(choice, computer_choice)
 
-  if win?[choice].include?(computer_choice)
+  if WIN_CONDITIONS.dig(choice, :beats).include?(computer_choice)
     player_wins += 1
-  elsif win?[computer_choice].include?(choice)
+  elsif WIN_CONDITIONS.dig(computer_choice, :beats).include?(choice)
     computer_wins += 1
   else
     ties += 1
