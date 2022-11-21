@@ -1,0 +1,5 @@
+flintstones = %w(Fred Barney Wilma Betty BamBam Pebbles)
+
+flintstones.index { |element| element.start_with?("Be") }
+
+flintstones.index { |name| name[0, 2] == "Be" }
