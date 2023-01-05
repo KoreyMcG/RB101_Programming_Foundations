@@ -156,7 +156,7 @@ def display_winner(result)
   end
 end
 
-def total_hand_value(current_hand)
+def total(current_hand)
   total = 0
   current_hand.each do |card|
     total += CARDS[card][:value]
@@ -179,7 +179,7 @@ loop do
     deal_card(dealer_hand)
   end
 
-  prompt("Player Card Value: #{total_hand_value(player_hand)}")
+  prompt("Player Card Value: #{total(player_hand)}")
   display_card(player_hand, false)
   prompt("Dealer Cards: ")
   display_card(dealer_hand, true)
@@ -190,30 +190,25 @@ loop do
     deal_card(player_hand) if answer.downcase.start_with?('h')
 
     system('clear')
-    prompt("Player Card Value: #{total_hand_value(player_hand)}")
+    prompt("Player Card Value: #{total(player_hand)}")
     display_card(player_hand, false)
     prompt("Dealer Cards: ")
     display_card(dealer_hand, true)
-    break if answer.downcase.start_with?('s') ||
-             total_hand_value(player_hand) > 21
+    break if answer.downcase.start_with?('s') || total(player_hand) > 21
   end
 
   loop do
     system('clear')
-    prompt("Player Card Value: #{total_hand_value(player_hand)}")
+    prompt("Player Card Value: #{total(player_hand)}")
     display_card(player_hand, false)
-    prompt("Dealer Card Value: #{total_hand_value(dealer_hand)}")
+    prompt("Dealer Card Value: #{total(dealer_hand)}")
     display_card(dealer_hand, false)
 
-    break if total_hand_value(dealer_hand) >= 17 ||
-             total_hand_value(dealer_hand) > 21
-    if total_hand_value(dealer_hand) < 17
-      deal_card(dealer_hand)
-    end
+    break if total(dealer_hand) >= 17 || total(dealer_hand) > 21
+    deal_card(dealer_hand) if total(dealer_hand) < 17
   end
 
-  display_winner(who_won?(total_hand_value(player_hand),
-                          (total_hand_value(dealer_hand))))
+  display_winner(who_won?(total(player_hand), total(dealer_hand)))
 
   prompt("Would you like to play again?")
   answer = gets.chomp
