@@ -49,9 +49,10 @@ last line 'puts a' will output 2 and return nil."],
 6| puts b",
     "Correct Answer: 
 => NameError: undefined local variable or method 'b' for main:Object 
-main is the outer scope and does not have a b variable. Where a variable is
-initialized determines its scope. In the above example, b is initialized in
-an inner scope."],
+the 'loop' is actually a method in the Kernal module with the block ( do..end )
+being fed in as an arguement. 'b' is then initialized in the inner scope of the
+( do..end ) block argument so it is unavailable in the outer scope causing it to
+raise NameError."],
 
     ["Question: What does the following code output?
 1| 2.times do
@@ -70,4 +71,60 @@ puts on line 7 and 11 will both throw a name error due to 'a' being
 assigned within the times method invocation. It is locally scoped to the times method
 
 'a' does not have an outer scope that the other two puts can draw from"],
+
+    ["Question: What does the following code produce and why?
+1| hello = 'hi'
+2|
+3| def hello
+4|  'Saying hello!'
+5| end
+6|
+7| puts hello",
+    "Correct Answer:
+The code will output 'hi' and return nil. Ruby will first search for a local
+variable 'hello' and if its not found will then search for a method with the
+given name. If neither or found a NameError message will be thrown."],
+
+    ["Question: What does the following code produce and why?
+1| hello = 'hi'
+2|
+3| def hello
+4|   'Saying hello!'
+5| end
+6|
+7| puts hello()",
+    "Correct Answer:
+The code will output 'Saying Hello' and return nil. Ruby will search for the
+method definition hello because we put parenthesis after the hello."],
+    ["Question: What does the following code produce and why?
+1| arr = [1, 2, 3]
+2|
+3| for i in arr do
+4|   a = 5
+5| end
+6|
+7| puts a",
+    "Correct Answer: Outputs => '5'
+
+The code will output the variable 'a' initialized in the 'for' loop; In Ruby
+The 'for' loop, 'while' loop, 'until' loop are all considered flow control
+constructs built into the Ruby programming itself so the variables initialized
+are available throughout the entire scope of the program.
+
+The 'do..end' is deceptive and appears as a block arguement being fed into a
+method however; 'for', 'until', 'while' are not methods but Ruby Code."],
+
+    ["Question: What does the following code do and why?
+1| a = 5
+2|
+3| loop do
+4|   b = a
+5| end
+6|
+7| puts b",
+    "Correct Answer: NameError
+This above code will output a NameError because b is initialized in the inner
+scope of a block ( loop do..end ). Unlike the 'for', 'while', 'until' looping
+constructs 'loop' is actual a method in the Kernel module and not actually part
+of Rubys main code."]
 ]
