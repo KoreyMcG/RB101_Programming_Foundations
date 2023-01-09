@@ -1,69 +1,17 @@
 CARDS = {
-  ace: {
-    quantity: 4,
-    value: 11,
-    picture: 'A '
-  },
-  king: {
-    quantity: 4,
-    value: 10,
-    picture: 'K '
-  },
-  queen: {
-    quantity: 4,
-    value: 10,
-    picture: 'Q '
-  },
-  jack: {
-    quantity: 4,
-    value: 10,
-    picture: 'J '
-  },
-  ten: {
-    quantity: 4,
-    value: 10,
-    picture: '10'
-  },
-  nine: {
-    quantity: 4,
-    value: 9,
-    picture: '9 '
-  },
-  eight: {
-    quantity: 4,
-    value: 8,
-    picture: '8 '
-  },
-  seven: {
-    quantity: 4,
-    value: 7,
-    picture: '7 '
-  },
-  six: {
-    quantity: 4,
-    value: 6,
-    picture: '6 '
-  },
-  five: {
-    quantity: 4,
-    value: 5,
-    picture: '5 '
-  },
-  four: {
-    quantity: 4,
-    value: 4,
-    picture: '4 '
-  },
-  three: {
-    quantity: 4,
-    value: 3,
-    picture: '3 '
-  },
-  two: {
-    quantity: 4,
-    value: 2,
-    picture: '2 '
-  }
+  ace: { quantity: 4, value: 11, picture: 'A ' },
+  king: { quantity: 4, value: 10, picture: 'K ' },
+  queen: { quantity: 4, value: 10, picture: 'Q ' },
+  jack: { quantity: 4, value: 10, picture: 'J ' },
+  ten: { quantity: 4, value: 10, picture: '10' },
+  nine: { quantity: 4, value: 9, picture: '9 ' },
+  eight: { quantity: 4, value: 8, picture: '8 ' },
+  seven: { quantity: 4, value: 7, picture: '7 ' },
+  six: { quantity: 4, value: 6, picture: '6 ' },
+  five: { quantity: 4, value: 5, picture: '5 ' },
+  four: { quantity: 4, value: 4, picture: '4 ' },
+  three: { quantity: 4, value: 3, picture: '3 ' },
+  two: { quantity: 4, value: 2, picture: '2 ' }
 }
 
 def prompt(msg)
